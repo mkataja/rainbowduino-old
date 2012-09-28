@@ -37,10 +37,12 @@ void loop(){
       frame.g[x][0] = frame.g[x-1][0];
       frame.b[x][0] = frame.b[x-1][0];
     }
-
-    frame.r[0][0] = 128 + 127*sin(i%73/73.0 * 2*3.14159);
-    frame.g[0][0] = 128 + 127*sin(i%157/157.0 * 2*3.14159 + 2);
-    frame.b[0][0] = 128 + 127*sin(i%101/101.0 * 2*3.14159 + 4);
+    
+    double joystickX = analogRead(0)/1023.0;
+    double joystickY = analogRead(1)/1023.0;
+    frame.r[0][0] = 255*joystickX;
+    frame.g[0][0] = 255*joystickY;
+    frame.b[0][0] = 255*(0.5*joystickX+0.5*(1-joystickY));
 
     ET.sendData();
   }
