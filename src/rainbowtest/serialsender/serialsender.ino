@@ -6,9 +6,9 @@ EasyTransfer ET;
 struct Frame{
   //put your variable definitions here for the data you want to receive
   //THIS MUST BE EXACTLY THE SAME ON THE OTHER ARDUINO
-  char r[8][8];
-  char g[8][8];
-  char b[8][8];
+  unsigned char r[8][8];
+  unsigned char g[8][8];
+  unsigned char b[8][8];
 };
 
 Frame frame;
