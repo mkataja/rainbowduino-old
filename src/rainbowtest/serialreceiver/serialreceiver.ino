@@ -4,29 +4,31 @@
 //create object
 EasyTransfer ET;
 
-struct PIXEL{
+struct Frame{
   //put your variable definitions here for the data you want to receive
   //THIS MUST BE EXACTLY THE SAME ON THE OTHER ARDUINO
-  char x;
-  char y;
-  char r;
-  char g;
-  char b;
+  char r[8][8];
+  char g[8][8];
+  char b[8][8];
 };
 
 //give a name to the group of data
-PIXEL pixel;
+Frame frame;
 
 void setup(){
-  Serial.begin(9600);
-  ET.begin(details(pixel), &Serial);
+  Serial.begin(19200);
+  ET.begin(details(frame), &Serial);
   pinMode(13, OUTPUT);
   Rb.init();
 }
 
 void loop(){
   if(ET.receiveData()){   
-    Rb.setPixelXY(pixel.x, pixel.y, pixel.r, pixel.g, pixel.b);
+    for(int x=0; x<8; x++) {
+      for(int y=0; y<8; y++) {
+        Rb.setPixelXY(x, y, frame.r[x][y], frame.g[x][y], frame.b[x][y]);
+      }
+    }
   }
 }
 
