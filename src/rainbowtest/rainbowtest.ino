@@ -5,7 +5,7 @@ void setup()
   Rb.init();
 }
 
-void getCharMask(unsigned char ascii, int poX, int poY, int** mask)
+void getCharMask(unsigned char ascii, int poX, int poY, int mask[][8])
 {
   if((ascii < 0x20)||(ascii > 0x7e))//Unsupported char.
   {
@@ -18,7 +18,7 @@ void getCharMask(unsigned char ascii, int poX, int poY, int** mask)
     {
       if((temp>>f)&0x01)
       {
-        mask[poY+f][poX+i] = 1;
+        mask[poY+f][poX+i] = 0xFF;
       } else {
         mask[poY+f][poX+i] = 0;
       }
@@ -49,14 +49,17 @@ void loop()
     g[0][0] = 128 + 127*sin(i%157/157.0 * 2*3.14159 + 2);
     b[0][0] = 128 + 127*sin(i%101/101.0 * 2*3.14159 + 4);
     
-    int charmask = malloc(nrows;
-    getCharMask('L', 0, 0, charmask);
+    int charmask[8][8];
+    getCharMask('M', 0, 0, charmask);
     
     // Draw buffers
     Rb.blankDisplay();
     for(int x=0; x<8; x++) {
       for(int y=0; y<8; y++) {
-        Rb.setPixelXY(x,y,r[x][y],g[x][y],b[x][y]);
+        Rb.setPixelXY(x, y, 
+                            r[x][y] & charmask[x][y],
+                            g[x][y] & charmask[x][y],
+                            b[x][y] & charmask[x][y]);
       }
     }
     delay(60);
